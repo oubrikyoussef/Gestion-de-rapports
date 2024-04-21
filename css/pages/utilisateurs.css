@@ -1,0 +1,66 @@
+.friend img {
+  width: 120px;
+}
+.friend .icons {
+  gap: 4px;
+}
+.friend .icons .icon {
+  background-color: #eee;
+  color: #666;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  width: 33px;
+  height: 33px;
+}
+.friend .icons .icon:hover {
+  background-color: var(--blue-color);
+  color: #fff;
+}
+.friend .footer a {
+  transition: 0.3s;
+}
+.friend .footer a:hover {
+  opacity: 0.9;
+}
+.exit{
+  top: 15px;
+  left: 6px;
+}
+.dialog-sure{
+  width: fit-content;
+}
+.dialog-sure button[type="submit"]:hover {
+  background-color: var(--blue-alt-color);
+}
+.dialog-sure button[type="reset"]:hover {
+  background-color: red;
+}
+
+.addUser{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  padding: 15px;
+  width: fit-content;
+  width: min(100%,500px);
+}
+.addUserForm  label{
+  margin-block: 0.4rem;
+}
+.addUser .blue-btn{
+  margin-top: 0.5rem;
+  width: 100%;
+}
+.addUserForm input {
+  padding: 0.5rem;
+}
+.addUser p{
+  word-wrap: break-word;
+}
+.addUserForm input:focus {
+  transition: .3s;
+  border: 1px solid var(--blue-color);
+}

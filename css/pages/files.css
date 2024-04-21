@@ -1,0 +1,58 @@
+#files main .container {
+  display: flex;
+  gap: 20px;
+  align-items: start;
+}
+
+#files .container .statistics {
+  flex-basis: 300px;
+}
+#files .container .added-files {
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr));
+}
+@media screen and (max-width: 1050px) {
+  #files main .container {
+    display: flex;
+    gap: 20px;
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+}
+#files .container .added-files {
+  flex-grow: 1;
+}
+#files .container .file .line {
+  height: 1px;
+}
+#files .container .file img {
+  width: 65px;
+}
+#files .container .file img:hover {
+  transform: rotate(8deg);
+}
+#files .container .file a:hover {
+  color: var(--blue-color);
+}
+#files .container .statistics .icon {
+  height: 35px;
+  width: 35px;
+}
+@media screen and (max-width: 380px) {
+  #files .statistics .box {
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+    justify-content: center;
+  }
+  #files .statistics .box .left-col {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  #files .container .file img {
+    width: 55px;
+  }
+}
+

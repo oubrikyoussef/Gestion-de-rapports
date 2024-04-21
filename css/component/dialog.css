@@ -1,0 +1,26 @@
+.dialog input[type="text"]:focus,.dialog input[type="email"]:focus,.dialog input[type="password"]:focus{
+  border-color: var(--blue-color);
+  transition: 0.3s;
+}
+.dialog{
+  transform: translate(calc(50vw - 50%),calc(50vh - 50%));
+}
+.dialog .exit{
+  position: absolute;
+  top: 8px;
+  left: 8px;
+}
+.dialog input {
+    padding: 8px;
+}
+
+.dialog button {
+    padding: 10px;
+}
+
+.dialog button:hover{
+  background-color: var(--blue-alt-color);
+}
+.dialog .exit:hover {
+  color: var(--blue-alt-color);
+}

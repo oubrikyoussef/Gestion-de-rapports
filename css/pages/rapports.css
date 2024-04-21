@@ -1,0 +1,138 @@
+ .report {
+  position: relative;
+  box-shadow: 8px 4px 4px rgba(0, 0, 0, 0.03);
+}
+ img.head {
+  width: 100%;
+  height: 100%;
+  transition: 0.3s;
+}
+ .report p {
+  line-height: 1.6;
+}
+ .report .body {
+  padding-top: 1.3rem;
+  padding-bottom: 0.6rem;
+}
+ .report .image-container img {
+  display: block;
+}
+ .report .image-container:hover img {
+  transform: scale(1.2) rotate(5deg);
+}
+ .report .actions a:hover{
+  color: var(--blue-color);
+}
+.search-box {
+  border-radius: 50px;
+  background-color: #eee;
+  gap: 1rem;
+  width: min(350px,100%);
+}
+
+ .search-bar {
+  border-radius: 50px;
+  padding: 15px 0 15px 15px;
+  caret-color: var(--main-color);
+}
+ .search-bar::placeholder {
+  transition: opacity 0.3;
+  font-weight: bold;
+  font-size: 16px;
+}
+ .search-bar:focus::placeholder {
+  opacity: 0;
+}
+ .search,.option {
+  cursor: pointer;
+}
+.search{
+  padding-block: 15px;
+}
+.option{
+  padding-block: 8px;
+
+}
+.option.active{
+  background-color: var(--blue-alt-color);
+}
+.search,.option{
+  border-radius: 50px;
+  padding-inline: 1.2rem;
+}
+
+ .search:hover,.option:hover {
+  background-color: var(--blue-alt-color);
+}
+.edit-report > *:not(:last-child) {
+  margin-bottom: 0.5rem;
+}
+@media screen and (max-width: 750px) {
+  .search-box {
+    flex-direction: column;
+    border-radius: 5px;
+  }
+  .search-bar,
+  .search {
+    width: 100%;
+    border-radius: 5px;
+  }
+}
+@media screen and (max-width: 500px) {
+  .options-rech{
+    display: flex;
+    flex-direction: column;
+  }
+  .option{
+    border-radius: 5px;
+  }
+}
+@media screen and (max-width: 430px) {
+  .search{
+    padding-block: 5px;
+  }
+  .search-bar{
+    padding-block: 8px;
+  }
+}
+a.ajouter-rapport:hover i {
+  animation: up-down infinite 0.8s;
+}
+@keyframes up-down {
+  100% {
+    transform: translateY(-5px);
+  }
+}
+
+.addRapport{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  padding: 15px;
+  width: fit-content;
+  width: min(100%,500px);
+}
+.addRapport textarea{
+  resize: none;
+  height: 100px;
+  padding: 0.5rem;
+}
+.addRapportForm  label{
+  margin-block: 0.4rem;
+}
+.addRapport .blue-btn{
+  margin-top: 0.5rem;
+  width: 100%;
+}
+.addRapportForm input {
+  padding: 0.5rem;
+}
+.addRapportForm p{
+  word-wrap: break-word;
+}
+.addRapportForm input:focus {
+  transition: .3s;
+  border: 1px solid var(--blue-color);
+}
+

@@ -1,0 +1,42 @@
+/* Start User Informations  */
+.user-informations .informations > div {
+  padding-left: 1.2rem;
+  transform: 0.3s;
+  padding-block: 1.5rem;
+}
+.user-informations .informations > div:hover {
+  background-color: #eeeeee5b;
+}
+.user-informations .box-heading {
+  margin-bottom: 0.6rem;
+}
+ .user-informations .infos {
+  display: flex;
+  text-align: center;
+}
+@media screen and (max-width: 790px) {
+   .user-informations {
+    text-align: start;
+  }
+   .user-informations .infos {
+    flex-direction: column;
+    gap: 14px;
+  }
+}
+.dialog-pass{
+  padding: 25px;
+  position: relative;
+  margin-bottom: 1.5rem;
+  min-height: 250px;
+}
+.error_indec{
+  opacity: 1;
+  position: absolute;
+  bottom:4px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 12px;
+  text-align: center;
+}
+
+/* End User Informations  */
