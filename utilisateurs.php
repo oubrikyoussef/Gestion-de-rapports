@@ -1,7 +1,7 @@
 <?php
 include_once('./components/head.php');
+session_start();
 ?>
-
 <head>
   <title>Utilisateurs</title>
   <link rel="stylesheet" href="./css/pages/utilisateurs.css">
@@ -9,6 +9,8 @@ include_once('./components/head.php');
   <link rel="stylesheet" href="./css/component/dialog.css">
   <link rel="stylesheet" href="../css/component/selection.css">
   <link rel="shortcut icon" href="./images/utilisateurs/icon.png" type="image/x-icon">
+  <link rel="stylesheet" href="./lib/notify/style.css">
+  <script src="./lib/notify/script.js"></script>
   <script src="./js/framework.js" defer></script>
   <script src="./js/utilisateurs/utilisateurs.js" defer></script>
   <script src="./js/utilisateurs/fetchUtilisateurs.js" defer></script>

@@ -1,5 +1,19 @@
 clearOverlay(addRapportFormContainer);
 setOverlayOnClick(addRapport,overlay);
+let notifier = new AWN({
+    position: "bottom-right", // Set the position of the notifications
+    duration: 1000, // Set the duration for which the notifications should be displayed
+    labels: {
+        tip: "Tip",
+        info: "Info",
+        success: "Success",
+        warning: "Warning",
+        alert: "Alert"
+    }
+});
+
+
+
 addRapportForm.addEventListener('submit', async (event) => {
     event.preventDefault();
  
@@ -16,6 +30,9 @@ addRapportForm.addEventListener('submit', async (event) => {
 
     if (!description) {
         document.querySelector('.error-indec-description').textContent = 'La description est obligatoire';
+        hasErrors = true;
+    } else if (description.length > 200) {
+        document.querySelector('.error-indec-description').textContent = 'La description ne doit pas dépasser 200 caractères';
         hasErrors = true;
     }
 
@@ -35,26 +52,30 @@ addRapportForm.addEventListener('submit', async (event) => {
             hasErrors = true;
         }
     }
-
+    errorIndecs.forEach((errorIndec)=>{
+        errorIndec.textContent = "";
+    })
     if (!hasErrors) {
         try {
             const formData = new FormData(addRapportForm);
 
-            const response = await fetch('./phpActions/rapports/addRapport.php', {
+            const response = await fetch('../../phpActions/rapports/addRapport.php', {
                 method: 'POST',
                 body: formData
             });
             const responseData = await response.json();
 
+            // Use the notifier to display messages
             if (responseData.error) {
-                alert(responseData.error);
+                notifier.alert(responseData.error);
             } else {
-                alert(responseData.message);
-                window.location.reload();
+                notifier.success(responseData.message);
+                setTimeout(() => {
+                    window.location.reload(); // Reload the page after 2000 milliseconds (2 seconds)
+                }, 2000);
             }
         } catch (error) {
             console.error('Error:', error);
-            alert('An error occurred while processing your request.');
         }
     }
 });

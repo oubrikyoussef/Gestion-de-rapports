@@ -1,5 +1,6 @@
 <head>
     <link rel="stylesheet" href="../css/component/header.css">
+    <script src="../js/header.js" defer></script>
 </head>
 <header class="bg-w">
     <div class="container1 flx-sb-c">
@@ -7,13 +8,16 @@
         <nav>
             <ul class="main-ul flx">
                 <li>
-                    <a href="../index.php" class="flx-ic ps-relative over-hidden main-tr ">Profile</a>
+                    <a href="../index.php" class="flx-ic ps-relative over-hidden main-tr">Profile</a>
                 </li>
                 <li><a href="../rapports.php" class="flx-ic ps-relative over-hidden main-tr">Rapports</a></li>
-                <li><a href="../utilisateurs.php" class="flx-ic ps-relative over-hidden main-tr">Utilisateurs</a></li>
+                <?php
+                if(isset($_SESSION["Nom_role"]) && $_SESSION["Nom_role"] == "Administrateur") {
+                    echo '<li><a href="../utilisateurs.php" class="flx-ic ps-relative over-hidden main-tr">Utilisateurs</a></li>';
+                }
+                ?>
                 <li><a href="../login.php" class="flx-ic ps-relative over-hidden main-tr"><i class="fa-solid fa-right-from-bracket"></i>&nbsp;Logout</a></li>
             </ul>
         </nav>
     </div>
-    <script src="../js/header.js"></script>
 </header>

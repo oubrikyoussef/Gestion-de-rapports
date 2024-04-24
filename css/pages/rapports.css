@@ -131,8 +131,16 @@ a.ajouter-rapport:hover i {
 .addRapportForm p{
   word-wrap: break-word;
 }
-.addRapportForm input:focus {
+.addRapportForm input:focus,.addRapportForm textarea:focus {
   transition: .3s;
   border: 1px solid var(--blue-color);
 }
-
+.report .body{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+.report .body p{
+  word-break: break-all;
+}

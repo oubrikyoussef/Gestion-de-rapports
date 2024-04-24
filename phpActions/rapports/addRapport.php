@@ -1,7 +1,6 @@
 <?php
 // Include database connection or any necessary files
 include('../connection.php');
-
 // Sample code to get you started, adjust as per your database schema and requirements
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -10,53 +9,56 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $description = $_POST['description'];
 
     // Check if a file was uploaded and perform file validation
-    if (isset($_FILES['rapport']) && $_FILES['rapport']['error'] === UPLOAD_ERR_OK) {
-        $fileName = $_FILES['rapport']['name'];
-        $fileSize = $_FILES['rapport']['size'];
-        $fileType = $_FILES['rapport']['type'];
-        $fileTmpPath = $_FILES['rapport']['tmp_name'];
+    // Check if a file was uploaded and perform file validation
+if (isset($_FILES['rapport']) && $_FILES['rapport']['error'] === UPLOAD_ERR_OK) {
+    $fileName = $_FILES['rapport']['name'];
+    $fileTmpPath = $_FILES['rapport']['tmp_name'];
 
-        // Validate file type (PDF or DOCX)
-        $allowedTypes = array('application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
-        if (!in_array($fileType, $allowedTypes)) {
-            echo json_encode(array('error' => 'Only PDF or DOCX files are allowed.'));
-            exit();
-        }
+    // Insert the report details into the database
+    try {
+        // Prepare the INSERT statement
+        $stmt = $pdo->prepare("INSERT INTO rapports_stage (Titre_rapport, Description_rapport, Chemin_fichier, Date_depot) VALUES (?, ?, ?, ?)");
+        // Bind parameters
+        $currentDate = date('Y-m-d');
+        $stmt->bindParam(1, $titre);
+        $stmt->bindParam(2, $description);
+        $stmt->bindValue(3, 'temp', PDO::PARAM_STR); // Use a temporary file name
+        $stmt->bindParam(4, $currentDate);
+        // Execute the statement
+        $stmt->execute();
 
-        // Validate file size (less than 20MB)
-        $maxFileSize = 20 * 1024 * 1024; // 20MB in bytes
-        if ($fileSize > $maxFileSize) {
-            echo json_encode(array('error' => 'File size must be less than 20MB.'));
-            exit();
-        }
+        // Retrieve the ID of the last inserted row
+        $lastInsertId = $pdo->lastInsertId();
+
+        // Get the original file extension
+        $fileExtension = pathinfo($fileName, PATHINFO_EXTENSION);
+
+        // Rename the file with the ID of the last inserted row and the original file extension
+        $newFileName = $lastInsertId . '.' . $fileExtension;
+        $uploadPath = '../../reports/' . $newFileName;
 
         // Move the uploaded file to a desired location (e.g., uploads directory)
-        $uploadPath = '../../reports/' . $fileName;
-        move_uploaded_file($fileTmpPath, $uploadPath);
-
-        // Insert the report details into the database
-        try {
-            // Prepare the INSERT statement
-            $stmt = $pdo->prepare("INSERT INTO rapports_stage (Titre_rapport, Description_rapport, Chemin_fichier,Date_depot) VALUES (?, ?, ?,?)");
-            // Bind parameters
-            $currentDate = date('Y-m-d');
-            $stmt->bindParam(1, $titre);
-            $stmt->bindParam(2, $description);
-            $stmt->bindParam(3, $uploadPath);
-            $stmt->bindParam(4, $currentDate);
-            // Execute the statement
+        if (move_uploaded_file($fileTmpPath, $uploadPath)) {
+            // Update the file name in the database
+            $stmt = $pdo->prepare("UPDATE rapports_stage SET Chemin_fichier = ? WHERE ID_rapport = ?");
+            $stmt->bindParam(1, $uploadPath);
+            $stmt->bindParam(2, $lastInsertId);
             $stmt->execute();
 
             // Example success message
-            echo json_encode(array('message' => 'Report added successfully'));
-        } catch (PDOException $e) {
-            // Handle database insertion error
-            echo json_encode(array('error' => 'Failed to add report to the database.'));
+            echo json_encode(array('message' => 'Rapport ajouté avec succès'));
+        } else {
+            // Handle file move error
+            echo json_encode(array('error' => 'Échec du déplacement du fichier.'));
         }
-    } else {
-        // Handle file upload error
-        echo json_encode(array('error' => 'Failed to upload file.'));
+    } catch (PDOException $e) {
+        // Handle database insertion error
+        echo json_encode(array('error' => 'Échec de l\'ajout du rapport à la base de données.'));
     }
+} else {
+    // Handle file upload error
+    echo json_encode(array('error' => 'Échec du téléchargement du fichier.'));
+}
 }
 
 // Close the database connection

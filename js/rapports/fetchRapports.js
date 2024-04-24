@@ -1,7 +1,13 @@
-// Function to fetch all reports
+let nomRole = null;
+fetch("../../phpActions/rapports/getNomRole.php")
+.then(response => response.json())
+.then(data => {
+    nomRole = data.nomRole;
+})
+.catch(error => console.error("Error fetching nomRole:", error));
 function fetchRapports() {
     const formData = new FormData(searchForm);
-    fetch("./phpActions/rapports/searchRapports.php", {
+    fetch("../../phpActions/rapports/searchRapports.php", {
             method: "POST",
             body: formData
         })
@@ -18,14 +24,14 @@ function searchRapports(event) {
 // Function to display reports
 function displayRapports(reports) {
     reportsContainer.innerHTML="";
-    reports.forEach(report => {
-        const reportDiv = createReportDiv(report);
+    reports.forEach(reportInfos => {
+        const reportDiv = createReportDiv(reportInfos);
         reportsContainer.appendChild(reportDiv);
     });
 }
 
 // Function to create a single report div
-function createReportDiv(report) {
+function createReportDiv(reportInfos) {
     const reportDiv = document.createElement("div");
     reportDiv.classList.add("report", "br-10", "bg-w", "over-hidden");
 
@@ -34,44 +40,48 @@ function createReportDiv(report) {
 
     const titleHeading = document.createElement("h2");
     titleHeading.classList.add("box-heading-1", "fz-16");
-    titleHeading.textContent = report.Titre_rapport;
+    titleHeading.textContent = reportInfos.Titre_rapport;
 
     const descriptionParagraph = document.createElement("p");
     descriptionParagraph.classList.add("fz-14", "c-grey");
-    descriptionParagraph.textContent = report.Description_rapport;
+    descriptionParagraph.innerText = reportInfos.Description_rapport;
 
     const otherInfosDiv = document.createElement("div");
     otherInfosDiv.classList.add("other-infos", "flx-sb-c", "mt-8");
 
-    const adminActionsDiv = document.createElement("div");
-    adminActionsDiv.classList.add("admin-actions", "actions");
+    if(nomRole == "Administrateur"){
+        const adminActionsDiv = document.createElement("div");
+        adminActionsDiv.classList.add("admin-actions", "actions");
+        const editLink = createLinkElement("#", "edit", "main-tr c-grey edit");
+        const editIcon = document.createElement("i");
+        editIcon.classList.add("fa-regular", "fa-pen-to-square");
+        editLink.appendChild(editIcon);
+    
+        const deleteLink = createLinkElement("#", "delete", "main-tr c-grey delete ml-5");
+        const deleteIcon = document.createElement("i");
+        deleteIcon.classList.add("fa-solid", "fa-trash");
+        deleteLink.appendChild(deleteIcon);
+    
+        adminActionsDiv.appendChild(editLink);
+        adminActionsDiv.appendChild(deleteLink);
 
-    const editLink = createLinkElement("#", "edit", "main-tr c-grey edit");
-    const editIcon = document.createElement("i");
-    editIcon.classList.add("fa-regular", "fa-pen-to-square");
-    editLink.appendChild(editIcon);
+        otherInfosDiv.appendChild(adminActionsDiv);
+    }
 
-    const deleteLink = createLinkElement("#", "delete", "main-tr c-grey delete ml-5");
-    const deleteIcon = document.createElement("i");
-    deleteIcon.classList.add("fa-solid", "fa-trash");
-    deleteLink.appendChild(deleteIcon);
-
-    adminActionsDiv.appendChild(editLink);
-    adminActionsDiv.appendChild(deleteLink);
 
     const dateParagraph = document.createElement("p");
     dateParagraph.classList.add("box-paragraph", "mb-0");
-    dateParagraph.textContent = "Date de depot : " + report.Date_depot;
+    dateParagraph.textContent = "Date de depot : " + reportInfos.Date_depot;
 
     const userActionsDiv = document.createElement("div");
     userActionsDiv.classList.add("user-actions", "actions", "flx");
 
-    const downloadLink = createLinkElement(report.Chemin_fichier, "download", "c-grey main-tr db main-tr", "cahier_de_charge", false);
+    const downloadLink = createLinkElement(reportInfos.Chemin_fichier, "download", "c-grey main-tr db main-tr", reportInfos.Titre_rapport);
     const downloadIcon = document.createElement("i");
     downloadIcon.classList.add("fa-solid", "fa-download");
     downloadLink.appendChild(downloadIcon);
 
-    const previewLink = createLinkElement(report.Chemin_fichier, "preview", "c-grey main-tr db ml-5 main-tr preview", false, true);
+    const previewLink = createLinkElement(reportInfos.Chemin_fichier, "preview", "c-grey main-tr db ml-5 main-tr preview", false, true);
     const previewIcon = document.createElement("i");
     previewIcon.classList.add("fa-regular", "fa-eye");
     previewLink.appendChild(previewIcon);
@@ -80,7 +90,6 @@ function createReportDiv(report) {
     userActionsDiv.appendChild(downloadLink);
     userActionsDiv.appendChild(previewLink);
 
-    otherInfosDiv.appendChild(adminActionsDiv);
     otherInfosDiv.appendChild(dateParagraph);
     otherInfosDiv.appendChild(userActionsDiv);
 
@@ -94,7 +103,7 @@ function createReportDiv(report) {
 }
 
 // Function to create a link element
-function createLinkElement(href, title, className, download = false, targetBlank = false) {
+function createLinkElement(href, title, className, download, targetBlank = false) {
     const link = document.createElement("a");
     link.href = href;
     link.title = title;

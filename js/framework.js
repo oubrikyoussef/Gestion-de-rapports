@@ -37,14 +37,6 @@ function setOverlayOnClick(button,overlay){
     });
 }
 
-function clearOverlay(overlay){
-    overlay.addEventListener("click", (event) => {
-        if (!event.target.closest('.dialog')) {
-            overlay.style.display = 'none';
-            document.body.style.overflow = "auto";
-        }
-    });
-}
 
 function clearOverlayOnClick(button,overlay){
     button.addEventListener('click', function(event) {

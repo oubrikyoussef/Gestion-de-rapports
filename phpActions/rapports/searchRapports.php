@@ -7,8 +7,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $searchValue = $_POST['searchvalue'];
 
         // Préparez l'instruction SQL pour éviter les injections SQL
-        $stmt = $pdo->prepare("SELECT * FROM rapports_stage WHERE LOWER(Titre_rapport) LIKE LOWER(:searchvalue) OR LOWER(Description_rapport) LIKE LOWER(:searchvalue)");
-
+        $stmt = $pdo->prepare("SELECT * FROM rapports_stage WHERE LOWER(Titre_rapport) LIKE LOWER(:searchvalue) OR LOWER(Description_rapport) LIKE LOWER(:searchvalue) ORDER BY Date_depot DESC, Titre_rapport DESC");
         $stmt->bindParam(':searchvalue', $searchTerm, PDO::PARAM_STR);
 
         // Définissez le terme de recherche avec les caractères génériques pour une correspondance partielle

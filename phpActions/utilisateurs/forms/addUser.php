@@ -13,6 +13,8 @@
 <option value="Génie Mécanique">Génie Mécanique</option>
 <option value="Génie Industriel">Génie Industriel</option>
 <option value="Génie Énergétique et Environnement">Génie Énergétique et Environnement</option>
+<option value="Finance et ingénierie décisionnelle">Finance et ingénierie décisionnelle</option>
+<option value="BTP">BTP</option>
 </select>
 <svg>
 <use xlink:href="#select-arrow-down"></use>
@@ -41,9 +43,11 @@
 <label for="niveau" class="db">Niveau</label>
 <label class="select" for="niveau-options" >
 <select id="niveau-options" name="niveau-options">
-<option value="1ère année">1ère année</option>
-<option value="2ème année">2ème année</option>
-<option value="3ème année">3ème année</option>
+<option value="CP1">CP1</option>
+<option value="CP2">CP2</option>
+<option value="CI1">CI1</option>
+<option value="CI2">CI2</option>
+<option value="CI3">CI3</option>
 </select>
 <svg>
 <use xlink:href="#select-arrow-down"></use>

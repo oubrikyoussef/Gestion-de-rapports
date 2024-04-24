@@ -10,4 +10,5 @@ const searchForm = document.getElementById("search-form");
 const addRapport = document.querySelector("a.add-rapport");
 const addRapportFormContainer = document.querySelector(".addRapport");
 const addRapportForm = document.querySelector(".addRapportForm");
+const errorIndecs = document.querySelectorAll(".error-indec");
 

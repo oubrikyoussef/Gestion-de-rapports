@@ -23,14 +23,12 @@
     gap: 14px;
   }
 }
-.dialog-pass{
+.changePass{
   padding: 25px;
   position: relative;
-  margin-bottom: 1.5rem;
   min-height: 250px;
 }
-.error_indec{
-  opacity: 1;
+.error_indec,.success_indec{
   position: absolute;
   bottom:4px;
   left: 50%;
@@ -38,5 +36,4 @@
   font-size: 12px;
   text-align: center;
 }
-
 /* End User Informations  */
